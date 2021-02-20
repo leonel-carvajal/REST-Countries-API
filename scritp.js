@@ -1,7 +1,10 @@
 const cards = document.getElementById('cards')
+const region = document.getElementById('cards')
+const filter = document.getElementById('filter')
+const ALLcoutries = 'https://restcountries.eu/rest/v2/all'
 
 const getCountries = async (URl='') => {
-  const url = URl || 'https://restcountries.eu/rest/v2/all'
+  const url = URl || ALLcoutries
   try {
     const res = await fetch(url)
     const data = await res.json()
@@ -11,11 +14,10 @@ const getCountries = async (URl='') => {
   }
 }
 
-const paintAllCountries = async () => {
-  const data = await getCountries()
+const paintAllCountries = async (uri) => {
+  const data =  await getCountries(uri) || await getCountries() 
   const fragment = document.createDocumentFragment()
   for (const countries of data) {
-    console.log(countries)
     //elements
     const card = document.createElement('article')
     const cardHeader = document.createElement('div')
@@ -82,5 +84,9 @@ const paintAllCountries = async () => {
   }
   cards.appendChild(fragment)
 }
-paintAllCountries()
+filter.addEventListener('change', (e) => {
+  cards.textContent = ''
+  paintAllCountries(`https://restcountries.eu/rest/v2/region/${e.target.value}`)
+})
+window.addEventListener('DOMContentLoaded',paintAllCountries)
 
