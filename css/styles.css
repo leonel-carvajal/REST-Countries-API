@@ -267,15 +267,15 @@ body::-webkit-scrollbar-thumb {
   padding-left: 1em;
 }
 .info__img{
-  max-width: 100%;
+  width: 100%;
 }
 .info__general{
   margin-bottom: 25px;
 }
 .info__title{
   color: var(--Dark-Blue);
-  font-size: 1.8em;
-  padding: 0.5em;
+  font-size: 1.5em;
+  padding-left: 0.7em;
 }
 
 .info__native,
