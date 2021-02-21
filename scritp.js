@@ -2,8 +2,13 @@ const cards = document.getElementById('cards')
 const region = document.getElementById('cards')
 const filter = document.getElementById('filter')
 const ALLcoutries = 'https://restcountries.eu/rest/v2/all'
+const search = document.getElementById('search')
+const form = document.getElementById('form')
+const waiting = document.getElementById('waiting')
 
-const getCountries = async (URl='') => {
+sessionStorage.setItem('pais',{})
+
+const getCountries = async (URl) => {
   const url = URl || ALLcoutries
   try {
     const res = await fetch(url)
@@ -83,10 +88,31 @@ const paintAllCountries = async (uri) => {
     fragment.appendChild(card)
   }
   cards.appendChild(fragment)
+  for (const countries of cards.children) {
+    countries.addEventListener('click', () => {
+      let name = countries.children[1].children[0].textContent
+      fetch(`https://restcountries.eu/rest/v2/name/${name}`)
+        .then(res => res.json())
+        .then(data => {
+          sessionStorage.setItem('pais',JSON.stringify(data))
+          location.replace('info.html')
+        })
+      })
+  }
 }
 filter.addEventListener('change', (e) => {
   cards.textContent = ''
   paintAllCountries(`https://restcountries.eu/rest/v2/region/${e.target.value}`)
 })
+
+form.addEventListener('submit', (e) => {
+  e.preventDefault()
+})
+search.addEventListener('keyup', (e) => {
+  cards.textContent = ''
+  paintAllCountries(`https://restcountries.eu/rest/v2/name/${e.target.value}`)
+})
+
+
 window.addEventListener('DOMContentLoaded',paintAllCountries)
 
