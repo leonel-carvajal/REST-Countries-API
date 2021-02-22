@@ -6,7 +6,7 @@ const search = document.getElementById('search')
 const form = document.getElementById('form')
 const waiting = document.getElementById('waiting')
 
-sessionStorage.setItem('pais',{})
+localStorage.setItem('pais',{})
 
 const getCountries = async (URl) => {
   const url = URl || ALLcoutries
@@ -15,7 +15,7 @@ const getCountries = async (URl) => {
     const data = await res.json()
     return data
   } catch (error) {
-    console.log(error)
+    console.log(error.message)
   }
 }
 
@@ -94,8 +94,10 @@ const paintAllCountries = async (uri) => {
       fetch(`https://restcountries.eu/rest/v2/name/${name}`)
         .then(res => res.json())
         .then(data => {
-          sessionStorage.setItem('pais',JSON.stringify(data))
-          location.replace('info.html')
+          for (const alpha of data) {
+            localStorage.setItem('pais', JSON.stringify(alpha.alpha2Code))
+            location.replace('info.html')
+          }
         })
       })
   }

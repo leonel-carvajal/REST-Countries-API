@@ -312,3 +312,6 @@ body::-webkit-scrollbar-thumb {
   text-align: center;
   box-shadow: 5px 5px 10px 0 var(--Dark-Gray);
 }
+.info__front:first-child{
+  margin-left: 15px;
+}
