@@ -1,12 +1,13 @@
-//console.log(JSON.parse(sessionStorage.getItem('pais')))
 const info = document.getElementById('info')
 let code = JSON.parse(localStorage.getItem('pais'))
+
 
 const getInfoCountry = () => { 
   fetch(`https://restcountries.eu/rest/v2/alpha/${code}`)
     .then(res => res.json()
       .then(data => {
-        const card = document.createElement('article')
+        // const card = document.createElement('article')
+        // card.classList.add('article')
         const infoHeader = document.createElement('div')
         const infoImg = document.createElement('img')
         infoImg.src = data.flag
@@ -94,7 +95,6 @@ const getInfoCountry = () => {
           linkBorder.textContent = borders
           bordersTitle.insertAdjacentElement('beforeend', linkBorder)
         }
-        
         //Card fomat
         infoHeader.appendChild(infoImg)
         infoHeader.appendChild(infoTitle)
@@ -120,21 +120,18 @@ const getInfoCountry = () => {
         infoEconomy.appendChild(infoLangText)
         infoBorders.appendChild(bordersTitle)
 
-        card.appendChild(infoHeader)
-        card.appendChild(infoBody)
-        card.appendChild(infoBorders)
-        info.appendChild(card)
+        info.appendChild(infoHeader)
+        info.appendChild(infoBody)
+        info.appendChild(infoBorders)
+        //info.appendChild(card)
+
+        const links = document.querySelectorAll('.info__front')
+        links.forEach(link => {
+          link.addEventListener('click', (e) => {
+            localStorage.setItem('pais', JSON.stringify(e.target.textContent))
+            location.reload()
+          })
+        })
     }))
-    
-}
-const Borders = () => {
-  const links = document.querySelectorAll('.info__front')
-  links.forEach(link => {
-    link.addEventListener('click', (e) => {
-      localStorage.setItem('pais', JSON.stringify(e.target.textContent))
-      location.reload()
-    })
-  })
-}
+} 
 getInfoCountry()
-window.addEventListener('load',Borders)

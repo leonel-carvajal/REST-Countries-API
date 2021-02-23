@@ -11,8 +11,6 @@ body {
   font-family: 'Nunito Sans', sans-serif;
   font-size: 14px;
   font-weight: 300;
-  margin: 0;
-  padding: 0;
   background-color: var(--Very-Light-Gray);
   overflow-x: hidden;
 }
@@ -26,7 +24,10 @@ body::-webkit-scrollbar-thumb {
   background-color: var(--Dark-Gray);
   border-radius: 7px;
 }
-
+.article{
+  background-color: var(--White);
+  height: 600px;
+}
 .header {
   height: 80px;
   background-color: var(--White);
@@ -102,6 +103,8 @@ body::-webkit-scrollbar-thumb {
   .cards {
     grid-template-columns: repeat(4, 300px);
     gap: 20px;
+    width: 90%;
+    margin-left: auto;
   }
 }
 
@@ -111,6 +114,11 @@ body::-webkit-scrollbar-thumb {
   border-radius: 10px;
   margin-bottom: 25px;
   box-shadow: 0 3px 3px 0 var(--Dark-Gray);
+}
+@media screen and (min-width:1024px){
+  .card{
+    cursor: pointer;
+  }
 }
 
 .card__header {
@@ -253,18 +261,29 @@ body::-webkit-scrollbar-thumb {
   text-align: right;
 }
 
-.info {
-  background-color: var(--White);
-  border-radius: 10px;
-  margin-bottom: 25px;
-  box-shadow: 0 3px 3px 0 var(--Dark-Gray);
-}
+
 .info__header{
   height: 250px;
+}
+@media screen and (min-width:1024px){
+.info__header{
+    grid-column:  span 2;
+    position: relative;
+  }
 }
 .info__body,
 .info__borders{
   padding-left: 1em;
+  background-color: var(--White);
+}
+@media screen and (min-width:1024px){
+  .info__body ,
+  .info__borders{
+    height: 415px;
+    display: grid;
+    place-items: start;
+    padding: 1em;
+  }
 }
 .info__img{
   width: 100%;
@@ -274,10 +293,18 @@ body::-webkit-scrollbar-thumb {
 }
 .info__title{
   color: var(--Dark-Blue);
-  font-size: 1.5em;
+  font-size: 1.8em;
   padding-left: 0.7em;
+  text-align: center;
 }
-
+@media screen and (min-width:1024px) {
+  .info__title {
+    position: absolute;
+    top: -50px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+}
 .info__native,
 .info__population,
 .info__region,
@@ -311,6 +338,11 @@ body::-webkit-scrollbar-thumb {
   font-weight: 800;
   text-align: center;
   box-shadow: 5px 5px 10px 0 var(--Dark-Gray);
+}
+@media screen and (min-width:1024px){
+  .info__front{
+    cursor: pointer;
+  }
 }
 .info__front:first-child{
   margin-left: 15px;
