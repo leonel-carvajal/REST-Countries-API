@@ -5,8 +5,10 @@ const ALLcoutries = 'https://restcountries.eu/rest/v2/all'
 const search = document.getElementById('search')
 const form = document.getElementById('form')
 const waiting = document.getElementById('waiting')
-
-localStorage.setItem('pais',{})
+const header = document.getElementById('header')
+const body = document.getElementById('body')
+const imgMoon = document.getElementById('imgMoon')
+localStorage.setItem('pais', {})
 
 const getCountries = async (URl) => {
   const url = URl || ALLcoutries
@@ -20,11 +22,12 @@ const getCountries = async (URl) => {
 }
 
 const paintAllCountries = async (uri) => {
-  const data =  await getCountries(uri) || await getCountries() 
+  const data = await getCountries(uri) || await getCountries()
   const fragment = document.createDocumentFragment()
   for (const countries of data) {
     //elements
     const card = document.createElement('article')
+    card.dataset.dark = 'off'
     const cardHeader = document.createElement('div')
     const cardImg = document.createElement('img')
     const cardBody = document.createElement('div')
@@ -36,7 +39,7 @@ const paintAllCountries = async (uri) => {
     const cardInfoR = document.createElement('div')
     const cardRegion = document.createElement('p')
     const cardRegionText = document.createElement('p')
-    const cardInfoPCa= document.createElement('div')
+    const cardInfoPCa = document.createElement('div')
     const cardCapital = document.createElement('p')
     const cardCapitalText = document.createElement('p')
 
@@ -99,22 +102,54 @@ const paintAllCountries = async (uri) => {
             location.replace('info.html')
           }
         })
-      })
+    })
   }
 }
 filter.addEventListener('change', (e) => {
   cards.textContent = ''
   paintAllCountries(`https://restcountries.eu/rest/v2/region/${e.target.value}`)
+
 })
 
 form.addEventListener('submit', (e) => {
   e.preventDefault()
 })
 search.addEventListener('keyup', (e) => {
-  cards.textContent = ''
-  paintAllCountries(`https://restcountries.eu/rest/v2/name/${e.target.value}`)
+  if (search.value.length !=='' && search.value.length>2) {
+    cards.textContent = ''
+    paintAllCountries(`https://restcountries.eu/rest/v2/name/${e.target.value}`)
+  }
+  if (search.value.length === 0) {
+    cards.textContent = ''
+    paintAllCountries(`https://restcountries.eu/rest/v2/name/${e.target.value}`)
+  }
 })
 
 
-window.addEventListener('DOMContentLoaded',paintAllCountries)
+const darkMode = document.getElementById('darkMode')
+darkMode.addEventListener('click', () => {
+  const items = document.querySelectorAll('.card')
+  header.classList.toggle('darkItem')
+  body.classList.toggle('darkMode')
+  filter.classList.toggle('darkItem')
+  search.classList.toggle('darkItem')
+  
+  if (imgMoon.dataset.mode === 'off') {
+    imgMoon.dataset.mode = 'on'
+    imgMoon.src = 'icon-sun.svg'
+  } else if (imgMoon.dataset.mode === 'on') {
+    imgMoon.dataset.mode = 'off'
+    imgMoon.src = 'icon-moon.svg'
+  }
+  
+  items.forEach(item => {
+    if (imgMoon.dataset.mode === 'on') {
+      item.classList.add('darkItem')
+    } else if (imgMoon.dataset.mode === 'off') {
+      item.classList.remove('darkItem')
+    }
+  })
+})
+
+window.addEventListener('DOMContentLoaded', paintAllCountries)
 

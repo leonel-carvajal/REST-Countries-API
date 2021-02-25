@@ -9,23 +9,23 @@
   <link rel="stylesheet" href="css/normalize.css">
   <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;600;800&display=swap" rel="stylesheet">
 </head>
-<body>
-  <header class="header">
+<body id="body">
+  <header class="header" id="header">
     <h1 class="header__title">Where in the word?</h1>
     <div class="header__mode">
-      <img src="icon-moon.svg" alt="icon-moon" class="header__img">
-      <p class="header__dark">Dark Mode</p>
+      <img src="icon-moon.svg" alt="icon-moon" class="header__img" id="imgMoon" data-mode="off">
+      <p class="header__dark" id="darkMode">Dark Mode</p>
     </div>
   </header>
   <main>
     <form action="#" class="form" id="form">
       <input type="search" name="form__search" id="search" placeholder="Search for a country" class="form__search">
       <select name="region" class="form__region" id="filter">
-        <option value="Africa">Africa</option>
-        <option value="Americas">Americas</option>
-        <option value="Asia">Asia</option>
-        <option value="Europe">Europe</option>
-        <option value="Oceania">Oceania</option>
+        <option value="Africa" class="form__option">Africa</option>
+        <option value="Americas" class="form__option">Americas</option>
+        <option value="Asia" class="form__option">Asia</option>
+        <option value="Europe" class="form__option">Europe</option>
+        <option value="Oceania" class="form__option">Oceania</option>
       </select>
     </form>
     <div class="waiting" id="waiting"></div>

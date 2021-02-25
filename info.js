@@ -95,6 +95,11 @@ const getInfoCountry = () => {
           linkBorder.textContent = borders
           bordersTitle.insertAdjacentElement('beforeend', linkBorder)
         }
+        if (data.borders.length<=0) {
+          const inf = document.createElement('p')
+          inf.textContent = 'DATA NOT AVAILABLE'
+          bordersTitle.insertAdjacentElement('beforeend', inf)
+        }
         //Card fomat
         infoHeader.appendChild(infoImg)
         infoHeader.appendChild(infoTitle)
