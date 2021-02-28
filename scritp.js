@@ -12,7 +12,7 @@ const mode = JSON.parse(localStorage.getItem('dark'))
 const darkMode = document.getElementById('darkMode')
 
 localStorage.setItem('pais', {})
-
+//localStorage.setItem('dark',JSON.stringify('off'))
 const getCountries = async (URl) => {
   waiting.classList.add('waiting--on')
   const url = URl || ALLcoutries
@@ -171,4 +171,8 @@ darkMode.addEventListener('click', () => {
 })
 
 window.addEventListener('DOMContentLoaded', paintAllCountries)
-
+window.addEventListener('load', () => {
+  if (mode === 'on') {
+    darker()
+  }
+})
