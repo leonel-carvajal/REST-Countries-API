@@ -13,6 +13,7 @@ body {
   font-weight: 300;
   background-color: var(--Very-Light-Gray);
   overflow-x: hidden;
+  /* transition: background-color 0.3s; */
 }
 
 body::-webkit-scrollbar {
@@ -230,11 +231,11 @@ body::-webkit-scrollbar-thumb {
   margin-left: auto;
   margin-right: auto;
   border: 5px solid rgba(0, 0, 0, 0.1);
-  width: 75px;
-  height: 75px;
+  width: 100px;
+  height: 100px;
   border-radius: 50%;
   display: none;
-  border-left-color:var(--Dark-Blue);
+  border-left-color: orange;
   animation: spin 1s linear; 
 }
 
@@ -361,9 +362,11 @@ body::-webkit-scrollbar-thumb {
 .darkMode{
   background-color: var(--Very-Dark-Blue);
   color: var(--White);
+  /* transition: background-color 0.3s ; */
 }
 .darkItem{
   background-color: var(--Dark-Blue);
   color: var(--White);
   box-shadow: 0 0 0 0;
 }
+

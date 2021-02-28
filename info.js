@@ -1,10 +1,16 @@
 const info = document.getElementById('info')
 let code = JSON.parse(localStorage.getItem('pais'))
+const mode = JSON.parse(localStorage.getItem('dark'))
+const waiting = document.getElementById('waiting')
+const dark = document.getElementById('darkMode')
+const Moon = document.getElementById('imgMoon')
 
 const getInfoCountry = () => { 
+  waiting.classList.add('waiting--on')
   fetch(`https://restcountries.eu/rest/v2/alpha/${code}`)
     .then(res => res.json()
       .then(data => {
+        waiting.classList.remove('waiting--on')
         // const card = document.createElement('article')
         // card.classList.add('article')
         const infoHeader = document.createElement('div')
@@ -127,8 +133,12 @@ const getInfoCountry = () => {
         info.appendChild(infoBody)
         info.appendChild(infoBorders)
 
-        //info.appendChild(card)
-
+        if (mode==='on') {
+          //console.log('ON')
+          darkMode()
+        } else if (mode === 'off') {
+          console.log('OFF')
+        }
         const links = document.querySelectorAll('.info__front')
         links.forEach(link => {
           link.addEventListener('click', (e) => {
@@ -136,15 +146,46 @@ const getInfoCountry = () => {
             location.reload()
           })
         })
+
     }))
 } 
 const darkMode = () => {
-  const mode = JSON.parse(localStorage.getItem('dark'))
-  if (mode === 'on') {
-    console.log('ON')
-  } else if (mode === 'off') {
-    console.log('OFF')
+  const header = document.querySelector('.header')
+
+    //console.log('ON')
+    document.body.classList.toggle('darkMode')
+    header.classList.toggle('darkItem')
+    document.querySelector('.back').classList.toggle('darkItem')
+    document.querySelector('.info__title').classList.toggle('darkMode')
+    document.querySelector('.info__body').classList.toggle('darkItem')
+    document.querySelector('.info__native').classList.toggle('darkItem')
+    document.querySelector('.info__population').classList.toggle('darkItem')
+    document.querySelector('.info__region').classList.toggle('darkItem')
+    document.querySelector('.info__subregion').classList.toggle('darkItem')
+    document.querySelector('.info__capital').classList.toggle('darkItem')
+    document.querySelector('.info__level').classList.toggle('darkItem')
+    document.querySelector('.info__currency').classList.toggle('darkItem')
+    document.querySelector('.info__lang').classList.toggle('darkItem')
+    document.querySelector('.info__borders').classList.toggle('darkItem')
+    document.querySelector('.borders__title').classList.toggle('darkItem')
+    for (const infoLink of document.querySelectorAll('.info__front')) {
+      infoLink.classList.toggle('darkItem')
+  }
+  if (imgMoon.dataset.mode === 'off') {
+    imgMoon.dataset.mode = 'on'
+    imgMoon.src = 'icon-sun.svg'
+  } else if (imgMoon.dataset.mode === 'on') {
+    imgMoon.dataset.mode = 'off'
+    imgMoon.src = 'icon-moon.svg'
+  }
+  if (imgMoon.dataset.mode === 'on') {
+    localStorage.setItem('dark',JSON.stringify('on'))
+  } else if(imgMoon.dataset.mode==='off') {
+    localStorage.setItem('dark', JSON.stringify('off'))
   }
 }
-darkMode()
-getInfoCountry()
+dark.addEventListener('click', () => {
+  darkMode()
+})
+window.addEventListener('DOMContentLoaded',getInfoCountry)
+

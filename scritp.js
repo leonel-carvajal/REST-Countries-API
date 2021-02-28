@@ -8,14 +8,18 @@ const waiting = document.getElementById('waiting')
 const header = document.getElementById('header')
 const body = document.getElementById('body')
 const imgMoon = document.getElementById('imgMoon')
+const mode = JSON.parse(localStorage.getItem('dark'))
+const darkMode = document.getElementById('darkMode')
 
 localStorage.setItem('pais', {})
 
 const getCountries = async (URl) => {
+  waiting.classList.add('waiting--on')
   const url = URl || ALLcoutries
   try {
     const res = await fetch(url)
     const data = await res.json()
+    waiting.classList.remove('waiting--on')
     return data
   } catch (error) {
     console.log(error.message)
@@ -25,7 +29,7 @@ const getCountries = async (URl) => {
 const paintAllCountries = async (uri) => {
   const data = await getCountries(uri) || await getCountries()
   const fragment = document.createDocumentFragment()
-  //waiting.classList.add('waiting--on')
+  
   for (const countries of data) {
     //elements
     const card = document.createElement('article')
@@ -95,7 +99,9 @@ const paintAllCountries = async (uri) => {
       card.classList.add('darkItem')
     } 
   }
+
   cards.appendChild(fragment)
+
   for (const countries of cards.children) {
     countries.addEventListener('click', () => {
       let name = countries.children[1].children[0].textContent
@@ -110,9 +116,7 @@ const paintAllCountries = async (uri) => {
     })
   }
 }
-// waiting.addEventListener('animationend', () => {
-//   waiting.classList.remove('waiting--on')
-// })
+
 filter.addEventListener('change', (e) => {
   cards.textContent = ''
   paintAllCountries(`https://restcountries.eu/rest/v2/region/${e.target.value}`)
@@ -129,19 +133,17 @@ search.addEventListener('keyup', (e) => {
   }
   if (search.value.length === 0) {
     cards.textContent = ''
-    paintAllCountries(`https://restcountries.eu/rest/v2/name/${e.target.value}`)
+    paintAllCountries(ALLcoutries)
   }
 })
 
-
-const darkMode = document.getElementById('darkMode')
-darkMode.addEventListener('click', () => {
+const darker = () => {
   const items = document.querySelectorAll('.card')
   header.classList.toggle('darkItem')
   body.classList.toggle('darkMode')
   filter.classList.toggle('darkItem')
   search.classList.toggle('darkItem')
-  
+
   if (imgMoon.dataset.mode === 'off') {
     imgMoon.dataset.mode = 'on'
     imgMoon.src = 'icon-sun.svg'
@@ -149,7 +151,7 @@ darkMode.addEventListener('click', () => {
     imgMoon.dataset.mode = 'off'
     imgMoon.src = 'icon-moon.svg'
   }
-  
+
   items.forEach(item => {
     if (imgMoon.dataset.mode === 'on') {
       item.classList.add('darkItem')
@@ -158,10 +160,14 @@ darkMode.addEventListener('click', () => {
     }
   })
   if (imgMoon.dataset.mode === 'on') {
-    localStorage.setItem('dark',JSON.stringify('on'))
-  } else if(imgMoon.dataset.mode==='off') {
+    localStorage.setItem('dark', JSON.stringify('on'))
+  } else if (imgMoon.dataset.mode === 'off') {
     localStorage.setItem('dark', JSON.stringify('off'))
   }
+}
+
+darkMode.addEventListener('click', () => {
+  darker()
 })
 
 window.addEventListener('DOMContentLoaded', paintAllCountries)
