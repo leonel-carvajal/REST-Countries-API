@@ -8,6 +8,7 @@ const waiting = document.getElementById('waiting')
 const header = document.getElementById('header')
 const body = document.getElementById('body')
 const imgMoon = document.getElementById('imgMoon')
+
 localStorage.setItem('pais', {})
 
 const getCountries = async (URl) => {
@@ -24,6 +25,7 @@ const getCountries = async (URl) => {
 const paintAllCountries = async (uri) => {
   const data = await getCountries(uri) || await getCountries()
   const fragment = document.createDocumentFragment()
+  //waiting.classList.add('waiting--on')
   for (const countries of data) {
     //elements
     const card = document.createElement('article')
@@ -87,8 +89,11 @@ const paintAllCountries = async (uri) => {
 
     cardInfoPCa.appendChild(cardCapital)
     cardInfoPCa.appendChild(cardCapitalText)
-
     fragment.appendChild(card)
+
+    if (imgMoon.dataset.mode === 'on') {
+      card.classList.add('darkItem')
+    } 
   }
   cards.appendChild(fragment)
   for (const countries of cards.children) {
@@ -105,6 +110,9 @@ const paintAllCountries = async (uri) => {
     })
   }
 }
+// waiting.addEventListener('animationend', () => {
+//   waiting.classList.remove('waiting--on')
+// })
 filter.addEventListener('change', (e) => {
   cards.textContent = ''
   paintAllCountries(`https://restcountries.eu/rest/v2/region/${e.target.value}`)
@@ -149,6 +157,11 @@ darkMode.addEventListener('click', () => {
       item.classList.remove('darkItem')
     }
   })
+  if (imgMoon.dataset.mode === 'on') {
+    localStorage.setItem('dark',JSON.stringify('on'))
+  } else if(imgMoon.dataset.mode==='off') {
+    localStorage.setItem('dark', JSON.stringify('off'))
+  }
 })
 
 window.addEventListener('DOMContentLoaded', paintAllCountries)

@@ -1,7 +1,6 @@
 const info = document.getElementById('info')
 let code = JSON.parse(localStorage.getItem('pais'))
 
-
 const getInfoCountry = () => { 
   fetch(`https://restcountries.eu/rest/v2/alpha/${code}`)
     .then(res => res.json()
@@ -124,10 +123,10 @@ const getInfoCountry = () => {
         infoEconomy.appendChild(infoLang)
         infoEconomy.appendChild(infoLangText)
         infoBorders.appendChild(bordersTitle)
-
         info.appendChild(infoHeader)
         info.appendChild(infoBody)
         info.appendChild(infoBorders)
+
         //info.appendChild(card)
 
         const links = document.querySelectorAll('.info__front')
@@ -139,4 +138,13 @@ const getInfoCountry = () => {
         })
     }))
 } 
+const darkMode = () => {
+  const mode = JSON.parse(localStorage.getItem('dark'))
+  if (mode === 'on') {
+    console.log('ON')
+  } else if (mode === 'off') {
+    console.log('OFF')
+  }
+}
+darkMode()
 getInfoCountry()
