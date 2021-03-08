@@ -187,5 +187,7 @@ const darkMode = () => {
 dark.addEventListener('click', () => {
   darkMode()
 })
-window.addEventListener('DOMContentLoaded',getInfoCountry)
+window.addEventListener('DOMContentLoaded', () => {
+  getInfoCountry()
+})
 
